@@ -362,6 +362,10 @@ var PDFView = {
     event.pageNumber = val;
     window.dispatchEvent(event);
 
+    if(this.previousPageNumber != currentPageNumber) {
+        $.post(this.url+'/'+currentPageNumber);
+    }
+
     // checking if the this.page was called from the updateViewarea function:
     // avoiding the creation of two "set page" method (internal and public)
     if (updateViewarea.inProgress)
