@@ -2697,6 +2697,7 @@ window.addEventListener('keydown', function keydown(evt) {
   // is selected.
   var curElement = document.activeElement || document.querySelector(':focus');
   if (curElement && (curElement.tagName.toUpperCase() === 'INPUT' ||
+                     curElement.tagName.toUpperCase() === 'TEXTAREA' ||
                      curElement.tagName.toUpperCase() === 'SELECT')) {
     // Make sure that the secondary toolbar is closed when Escape is pressed.
     if (evt.keyCode !== 27) { // 'Esc'
