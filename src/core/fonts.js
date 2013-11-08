@@ -3656,7 +3656,7 @@ var Font = (function FontClosure() {
         }
       }
 
-      function sanitizeTTPrograms(fpgm, prep) {
+      function sanitizeTTPrograms(fpgm, prep, cvt) {
         var ttContext = {
           functionsDefined: [],
           functionsUsed: [],
@@ -3672,6 +3672,11 @@ var Font = (function FontClosure() {
         }
         if (fpgm) {
           checkInvalidFunctions(ttContext, maxFunctionDefs);
+        }
+        if (cvt && (cvt.length & 1)) {
+          var cvtData = new Uint8Array(cvt.length + 1);
+          cvtData.set(cvt.data);
+          cvt.data = cvtData;
         }
         return ttContext.hintsValid;
       }
@@ -3751,10 +3756,11 @@ var Font = (function FontClosure() {
       }
 
       var hintsValid = sanitizeTTPrograms(tables.fpgm, tables.prep,
-                                          maxFunctionDefs);
+                                          tables['cvt '], maxFunctionDefs);
       if (!hintsValid) {
         delete tables.fpgm;
         delete tables.prep;
+        delete tables['cvt '];
       }
 
       // Tables needs to be written by ascendant alphabetic order
